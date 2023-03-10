@@ -1,11 +1,11 @@
-import './style.css'
+import { Container } from './styles'
 
 export function Details(){
 
 return (
-  <div>
+  <Container>
   <h1>hello word!</h1>
   <span> Edna Maria</span>
-  </div>
+  </Container>
   )
 }
