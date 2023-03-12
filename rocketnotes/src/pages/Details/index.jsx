@@ -2,16 +2,14 @@ import { Container } from './styles'
 
 // usando o meu componente botão
 import {Button} from '../../components/Button/index'
+import {Header} from '../../components/Header/index'
 
 export function Details(){
 
 return (
   <Container>
-  <h1>Hello word!</h1>
-  <span> Edna Maria</span>
-
-  <Button title="Entrar" loading/> 
-  <Button title="Cadastrar"/> 
+  
+  <Header/>
   <Button title="Voltar"/> 
 
   </Container>
