@@ -14,12 +14,11 @@ export const Container = styled.header`
   justify-content: space-between;
 
   padding: 0 80px;
-`;
+`
 
 export const Profile = styled.div`
   display: flex;
   align-items: center;
-
 
   > img {
     width: 56px;
@@ -42,5 +41,15 @@ export const Profile = styled.div`
       font: 18px;
       color: ${({ theme }) => theme.COLORS.WHITE};
     }
+  }
+`
+
+export const Logout = styled.button`
+  border: none;
+  background: none;
+
+  > svg {
+    color: ${({ theme }) => theme.COLORS.GRAY_100};
+    font-size: 36px;
   }
 `
