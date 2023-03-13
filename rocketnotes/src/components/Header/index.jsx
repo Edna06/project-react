@@ -1,4 +1,4 @@
-import { Container, Profile, Logout } from './style'
+import { Container, Profile, Logout } from './styles'
 import { RiShutDownLine } from 'react-icons/ri' 
 
 

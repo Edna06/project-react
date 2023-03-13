@@ -2,6 +2,7 @@ import { Container, Links } from './styles'
 
 import {Button} from '../../components/Button/index'
 import {Header} from '../../components/Header/index'
+import {ButtonText} from '../../components/ButtonText/index'
 import {Section} from '../../components/Section/index'
 import {Tag} from '../../components/Tags/index'
 
@@ -12,6 +13,9 @@ return (
   <Container>
   
   <Header/>
+
+  <ButtonText title="Excluir nota"/>
+
   <Section title= "Links úteis">
     <Links>
        <li>
@@ -29,7 +33,7 @@ return (
   <Tag title="nodejs"/>
   </Section>
   
-  <Button title="Voltar"/> 
+  <Button title="Voltar"/>   
 
   </Container>
   )
