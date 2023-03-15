@@ -1,4 +1,4 @@
-import { Container, Links } from './styles'
+import { Container, Links, Content } from './styles'
 
 import {Button} from '../../components/Button/index'
 import {Header} from '../../components/Header/index'
@@ -14,8 +14,18 @@ return (
   
   <Header/>
 
+  <main>
+    <Content>
+
   <ButtonText title="Excluir nota"/>
 
+    <h1>Introdução ao React</h1>
+    <br />
+    <p>React é uma biblioteca de JavaScript de código aberto para criação de interfaces de usuário. Desenvolvida pelo Facebook, React permite que os desenvolvedores criem componentes de UI reutilizáveis e interativos para aplicativos web e móveis. O React utiliza uma abordagem declarativa para definir como a interface do usuário deve ser exibida, permitindo que os desenvolvedores se concentrem na lógica da aplicação em vez de se preocupar com a manipulação direta do DOM. React é uma das bibliotecas de JavaScript mais populares e é amplamente utilizada em aplicações web modernas.
+    </p>
+
+
+    
   <Section title= "Links úteis">
     <Links>
        <li>
@@ -35,6 +45,10 @@ return (
   
   <Button title="Voltar"/>   
 
+  </Content>
+  </main>
+
   </Container>
+
   )
 }

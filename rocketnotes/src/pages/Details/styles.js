@@ -5,12 +5,17 @@ export const Container = styled.div`
   height: 100vh;
 
   display: grid;
-  /* definindo duas linhas. A primeira terá o tamanho de 105px e as demais terão o tamanho automático */
+  
   grid-template-rows: 105px auto;
-  /* definindo  nomes para as minhas linhas*/
   grid-template-areas:
     'header'
     'content';
+
+  > main {
+    grid-area: content; 
+    overflow-y: scroll;
+    padding: 64px 0;
+  }
 `
 
 export const Links = styled.ul`
@@ -22,5 +27,30 @@ export const Links = styled.ul`
     a {
       color: ${({ theme }) => theme.COLORS.WHITE};
     }
+  }
+`
+
+export const Content = styled.div`
+  //levando todo o conteúdo para o centro da tela
+  max-width: 550px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  > button:first-child {
+    align-self: end; 
+  }
+
+  > h1 {
+    font-size: 36px;
+    font-weight: 500;
+    padding-top: 65px;
+  }
+
+  > p {
+    font-size: 16px;
+    margin-top: 16px;
+    text-align: justify;
   }
 `
