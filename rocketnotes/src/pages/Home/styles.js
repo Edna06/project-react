@@ -5,7 +5,8 @@ export const Container = styled.div`
   height: 100vh;
 
   display: grid;
-  grid-template-areas: 250px auto;
+  
+  grid-template-columns: 250px auto;
   grid-template-rows: 105px 128px auto 64px;
   grid-template-areas:
     'brand header'
@@ -47,12 +48,11 @@ export const Menu = styled.ul`
 
 export const Search = styled.div`
   grid-area: search;
-  background: violet;
+  padding: 64px 64px 0;
 `
 
 export const Content = styled.div`
   grid-area: content;
-  background: blue;
 `
 
 export const NewNote = styled.button`
