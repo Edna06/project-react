@@ -1,10 +1,25 @@
-import { Link } from 'react-router-dom'
-import { Container, Form, Avatar } from './styles'
+import {useState} from 'react'
+
 import {FiArrowLeft, FiUser, FiMail,FiLock, FiCamera} from 'react-icons/fi'
+import { Link } from 'react-router-dom'
+
+import { useAuth } from '../../hooks/auth'
+
+import { Container, Form, Avatar } from './styles'
 import {Input} from '../../components/Input/index'
 import {Button} from '../../components/Button/index'
 
 export function Profile(){
+ const {user} = useAuth() //pegando o usuário dentro do nosso contexto de autenticação
+
+
+  const [name, setName] = useState(user.name) //pegando o valor inicial que está armazenado no nosso contexto
+  const [email, setEmail] = useState(user.email)
+  const [passwordOld, setPasswordOld] = useState()
+  const [passwordNew, setPasswordNew] = useState()
+
+
+
   return(
     <Container>
       <header>
@@ -35,24 +50,32 @@ export function Profile(){
           placeholder="Nome"
           type="text"
           icon={FiUser}
+          value={name}
+          onChange = {e => setName(e.target.value)}
         />
 
         <Input
           placeholder="E-mail"
           type="text"
           icon={FiMail}
+          value={email}
+          onChange = {e => setEmail(e.target.value)}
+
         />
 
         <Input
           placeholder="Senha atual"
           type="Password"
           icon={FiLock}
+          onChange = {e => setPasswordOld(e.target.value)}
+          //funções que atualizam as informações do usuário
         />
 
         <Input
           placeholder="Nova Senha"
           type="Password"
           icon={FiLock}
+          onChange = {e => setPasswordNew(e.target.value)}
         />
 
         <Button title='Salvar'/>
