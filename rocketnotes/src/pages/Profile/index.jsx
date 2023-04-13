@@ -3,22 +3,32 @@ import {useState} from 'react'
 import {FiArrowLeft, FiUser, FiMail,FiLock, FiCamera} from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 
-import { useAuth } from '../../hooks/auth'
+import { useAuth } from '../../hooks/auth.jsx'
 
 import { Container, Form, Avatar } from './styles'
 import {Input} from '../../components/Input/index'
 import {Button} from '../../components/Button/index'
 
 export function Profile(){
- const {user} = useAuth() //pegando o usuário dentro do nosso contexto de autenticação
+ const {user, updateProfile } = useAuth() 
 
 
+ //nossos estados
   const [name, setName] = useState(user.name) //pegando o valor inicial que está armazenado no nosso contexto
   const [email, setEmail] = useState(user.email)
   const [passwordOld, setPasswordOld] = useState()
   const [passwordNew, setPasswordNew] = useState()
 
-
+  async function handleUpdate(){
+      const user = {
+        name,
+        email,
+        password: passwordNew, //enviando a nova senha 
+        old_password: passwordOld //enviando a senha antiga
+      }
+      await updateProfile({ user })  
+    }
+  
 
   return(
     <Container>
@@ -67,8 +77,7 @@ export function Profile(){
           placeholder="Senha atual"
           type="Password"
           icon={FiLock}
-          onChange = {e => setPasswordOld(e.target.value)}
-          //funções que atualizam as informações do usuário
+          onChange = {e => setPasswordOld(e.target.value)}//funções que atualizam as informações do usuário
         />
 
         <Input
@@ -78,7 +87,7 @@ export function Profile(){
           onChange = {e => setPasswordNew(e.target.value)}
         />
 
-        <Button title='Salvar'/>
+        <Button title='Salvar' onClick={handleUpdate}/>
       </Form>
 
     </Container>

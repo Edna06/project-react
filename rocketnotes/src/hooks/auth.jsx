@@ -6,10 +6,8 @@ import {api} from "../services/api" //para que eu consiga conectar com a api
 export const AuthContext = createContext({})
 
 
+//função de autenticação 
 function AuthProvider({ children }) { 
-  //função de autenticação 
-
-  
   const [data, setData] = useState({}) 
 
   async function signIn({email, password}){ 
@@ -17,8 +15,6 @@ function AuthProvider({ children }) {
        const response = await api.post("/sessions", {email, password})
        const {user, token} = response.data; 
 
-
-       
        localStorage.setItem('@rocketnotes:user', JSON.stringify(user)) 
        localStorage.setItem('@rocketnotes:token', token)
 
@@ -44,6 +40,27 @@ function AuthProvider({ children }) {
   }
 
 
+  async function updateProfile({user}){ //preciso receber aqui os dados do usuário
+    try{
+
+      await api.put('/users', user) //passando qual é o nosso usuário
+      localStorage.setItem('@rocketnotes:user', JSON.stringify(user))
+
+      setData({
+        user,
+        token: data.token
+      })
+      alert("Perfil atualizado!")
+
+    } catch(error){
+        if(error.response){ 
+          alert(error.response.data.message)
+        } else {
+          alert("Não foi possível atualizar o perfil.")
+        }
+      }
+    }
+
   useEffect(() => {
    const user = localStorage.getItem('@rocketnotes:user')
    const token = localStorage.getItem('@rocketnotes:token') 
@@ -65,6 +82,7 @@ function AuthProvider({ children }) {
       value={{ 
         signIn, 
         signOut, 
+        updateProfile, //disponibilizando a função
         user: data.user
       }} 
     >
