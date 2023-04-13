@@ -35,6 +35,14 @@ function AuthProvider({ children }) {
     }
   }
 
+  // removendo as informações que estão salvas no meu localstorage
+  function signOut(){
+    const user = localStorage.removeItem('@rocketnotes:user')
+   const token = localStorage.removeItem('@rocketnotes:token') 
+
+   setData({})
+  }
+
 
   useEffect(() => {
    const user = localStorage.getItem('@rocketnotes:user')
@@ -53,7 +61,11 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ signIn, user: data.user }} 
+      value={{ 
+        signIn, 
+        signOut, 
+        user: data.user
+      }} 
     >
       {children}
     </AuthContext.Provider> 
