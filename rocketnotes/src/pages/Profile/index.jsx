@@ -38,12 +38,12 @@ export function Profile(){
       await updateProfile({ user, avatarFile }) //avatarFile -> o arquivo selecionado de fato pelo usuário (pois tenho que salvar no meu banco de dados)
     }
 
-  function handleChangeAvatar(event){ //o event vai ser transferido de forma automática pelo onChange
-    const file = event.target.files[0] //no event, eu posso pegar os arquivos que foram recebidos com a ação. Posso pegar um ou mais de um (de acordo com a sua posição)
-    setAvatarFile(file)//vai receber o arquivo selecionado
+  function handleChangeAvatar(event){
+    const file = event.target.files[0]
+    setAvatarFile(file)
 
     // para exibir o avatar de fato
-    const imagePreview = URL.createObjectURL(file) //para criar uma url para o arquivo enviado
+    const imagePreview = URL.createObjectURL(file)
     setAvatar(imagePreview)
 
     //a partir de agora, a imagem será carregada na nossa aplicação, porém sumirá se eu recarregar a página
@@ -69,8 +69,8 @@ export function Profile(){
 
             <input
               id='avatar'
-              type='file' //botão de upload de imagens
-              onChange={handleChangeAvatar} // quando alguma alteração for feita, irá disparar essa função
+              type='file'
+              onChange={handleChangeAvatar}
             />
           </label>
         </Avatar>

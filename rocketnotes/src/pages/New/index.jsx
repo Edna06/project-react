@@ -1,4 +1,7 @@
+import {useState} from 'react'
+
 import {Link} from 'react-router-dom'
+
 import {Textarea} from '../../components/Textarea/index'
 import {NoteItem} from '../../components/NoteItem/index'
 import {Section} from '../../components/Section/index'
@@ -10,8 +13,20 @@ import { Container, Form} from './styles'
 
 
 export function New(){
+// para armazenar os estados que estamos criando
+const [links, setLinks] = useState([])
+const [newLink, setNewLink] = useState("")
+
+function handleAddLink() {
+  setLinks(prevState => [...prevState, newLink])
+  setNewLink("")
+}
+
+function handleRemoveLink(deleted) { 
+ setLinks( prevState => [...prevState.filter(link => link !== deleted)])
+}
+
   return (
-    
     <Container>
       <Header/>
 
@@ -21,13 +36,28 @@ export function New(){
           <h1>Criar nota</h1>
           <Link to="/">Voltar</Link>
         </header>
-        
+
         <Input placeholder='Titulo'/>
         <Textarea placeholder='Observações '/>
 
         <Section title="Links úteis">
-          <NoteItem value="https://www.rocketseat.com.br"/>
-          <NoteItem isNew placeholder="Novo link"/>
+          {
+
+            links.map((link, index) => ( // index -> a posição
+            <NoteItem
+            key={String(index)}
+            value={link}
+            onClick={() => handleRemoveLink(link)}/> // estou passando um parâmetro para dentro do handleRemoveLink, por isso está em formato de arrow function
+            // se não tiver isso, ele vai tentar executar de forma automática
+            ))
+          }
+
+          <NoteItem
+          isNew
+          placeholder="Novo link"
+          value={newLink}
+          onChange={ e => setNewLink(e.target.value)}
+          onClick={handleAddLink}/>
         </Section>
 
 
