@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom'
 
 import { useAuth } from '../../hooks/auth.jsx'
 
+import {api} from '../../services/api'
+import avatarPlaceholder from '../../assets/avatar_placeholder.svg' // importando a imagem de placeholder || caso o usuário não tenha uma foto
+
 import { Container, Form, Avatar } from './styles'
 import {Input} from '../../components/Input/index'
 import {Button} from '../../components/Button/index'
 
 export function Profile(){
- const {user, updateProfile } = useAuth() 
+ const {user, updateProfile } = useAuth()
 
 
  //nossos estados
@@ -19,16 +22,32 @@ export function Profile(){
   const [passwordOld, setPasswordOld] = useState()
   const [passwordNew, setPasswordNew] = useState()
 
+
+  const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
+  const [avatar, setAvatar] = useState(avatarUrl) //se o usuário já tiver avatar, eu vou colocar aqui o avatar
+  const [avatarFile, setAvatarFile] = useState(null) //usado exclusivamente para carregar um novo avatar
+  //vai começar como null => sem avatar
+
   async function handleUpdate(){
       const user = {
         name,
         email,
-        password: passwordNew, //enviando a nova senha 
+        password: passwordNew, //enviando a nova senha
         old_password: passwordOld //enviando a senha antiga
       }
-      await updateProfile({ user })  
+      await updateProfile({ user, avatarFile }) //avatarFile -> o arquivo selecionado de fato pelo usuário (pois tenho que salvar no meu banco de dados)
     }
-  
+
+  function handleChangeAvatar(event){ //o event vai ser transferido de forma automática pelo onChange
+    const file = event.target.files[0] //no event, eu posso pegar os arquivos que foram recebidos com a ação. Posso pegar um ou mais de um (de acordo com a sua posição)
+    setAvatarFile(file)//vai receber o arquivo selecionado
+
+    // para exibir o avatar de fato
+    const imagePreview = URL.createObjectURL(file) //para criar uma url para o arquivo enviado
+    setAvatar(imagePreview)
+
+    //a partir de agora, a imagem será carregada na nossa aplicação, porém sumirá se eu recarregar a página
+  }
 
   return(
     <Container>
@@ -41,8 +60,8 @@ export function Profile(){
 
       <Form action="">
         <Avatar>
-          <img 
-            src="https://www.github.com/Edna06.png" 
+          <img
+            src= {avatar}
             alt="Foto do usuário" />
 
           <label htmlFor="avatar">
@@ -51,6 +70,7 @@ export function Profile(){
             <input
               id='avatar'
               type='file' //botão de upload de imagens
+              onChange={handleChangeAvatar} // quando alguma alteração for feita, irá disparar essa função
             />
           </label>
         </Avatar>
