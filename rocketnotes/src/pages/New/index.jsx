@@ -48,7 +48,19 @@ function handleRemoveTag(tagDeleted) {
   setTags( prevState => [...prevState.filter(tag => tag !== tagDeleted)])
 }
 
-async function handleNawNote() {
+async function handleNewNote() {
+  if(!title){
+    return alert('Digite o título da nota')
+  }
+
+
+  if(newTag){
+    return alert('você deixou uma tag no campo para adicionar, mas não clicou em adicionar. Clique para adicionar ou deixe o campo vazio.')
+  }
+
+  if(newLink){
+    return alert('você deixou um link no campo para adicionar, mas não clicou em adicionar. Clique para adicionar ou deixe o campo vazio.')
+  }
 
   await api.post('/notes', {
     title,
@@ -122,7 +134,7 @@ async function handleNawNote() {
         </Section>
 
         <Button title='Salvar'
-        onClick={handleNawNote}/>
+        onClick={handleNewNote}/>
         </Form>
       </main>
 
