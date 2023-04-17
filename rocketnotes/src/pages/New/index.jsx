@@ -17,13 +17,22 @@ export function New(){
 const [links, setLinks] = useState([])
 const [newLink, setNewLink] = useState("")
 
+const [tags, setTags] = useState([]) // [] -> indica que é uma coleção
+const [newTag, setNewTag] = useState("")
+
 function handleAddLink() {
   setLinks(prevState => [...prevState, newLink])
   setNewLink("")
 }
 
-function handleRemoveLink(deleted) { 
+function handleRemoveLink(deleted) {
  setLinks( prevState => [...prevState.filter(link => link !== deleted)])
+}
+
+
+function handleAddTag() {
+  setTags( prevState => [...prevState, newTag])
+  setNewTag('')
 }
 
   return (
@@ -41,14 +50,13 @@ function handleRemoveLink(deleted) {
         <Textarea placeholder='Observações '/>
 
         <Section title="Links úteis">
-          {
 
+          {
             links.map((link, index) => ( // index -> a posição
             <NoteItem
             key={String(index)}
             value={link}
-            onClick={() => handleRemoveLink(link)}/> // estou passando um parâmetro para dentro do handleRemoveLink, por isso está em formato de arrow function
-            // se não tiver isso, ele vai tentar executar de forma automática
+            onClick={() => handleRemoveLink(link)}/>
             ))
           }
 
@@ -63,8 +71,23 @@ function handleRemoveLink(deleted) {
 
         <Section title="Marcadores">
           <div className="tags">
-          <NoteItem value='React'/>
-          <NoteItem isNew placeholder='Nova tag'/>
+
+          {
+          tags.map((tag, index) => (
+          <NoteItem
+            key={String(index)}
+            value={tag}
+            // onClick={}
+            />
+            ))
+          }
+
+          <NoteItem
+          isNew
+          placeholder='Nova tag'
+          value={newTag}
+          onChange={e => setNewTag(e.target.value)}
+          onClick={handleAddTag}/>
           </div>
         </Section>
 
