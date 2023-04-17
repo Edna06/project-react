@@ -25,14 +25,18 @@ function handleAddLink() {
   setNewLink("")
 }
 
-function handleRemoveLink(deleted) {
- setLinks( prevState => [...prevState.filter(link => link !== deleted)])
+function handleRemoveLink(linkDeleted) {
+ setLinks( prevState => [...prevState.filter(link => link !== linkDeleted)])
 }
 
 
 function handleAddTag() {
   setTags( prevState => [...prevState, newTag])
   setNewTag('')
+}
+
+function handleRemoveTag(tagDeleted) {
+  setTags( prevState => [...prevState.filter(tag => tag !== tagDeleted)])
 }
 
   return (
@@ -77,7 +81,7 @@ function handleAddTag() {
           <NoteItem
             key={String(index)}
             value={tag}
-            // onClick={}
+            onClick={() => handleRemoveTag(tag)}
             />
             ))
           }
