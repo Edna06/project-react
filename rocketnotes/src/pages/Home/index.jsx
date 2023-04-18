@@ -16,6 +16,21 @@ import { ButtonText } from '../../components/ButtonText/index'
 export function Home(){
 
   const [tags, setTags] = useState([])
+  const [tagsSelected, setTagsSelected] = useState([])
+
+function handleTagSelected(tagName) {
+  const alreadySelected = tagsSelected.includes(tagName)//quero saber se a tag já está selecionada
+  console.log(alreadySelected)
+
+  if(alreadySelected){
+    const filteredTags = tagsSelected.filter(tag => tag !== tagName)//tags filtradas
+    setTagsSelected(filteredTags)
+  }else {
+    setTagsSelected(prevState => [...prevState, tagName])
+    }
+  }
+
+
 
   useEffect( () => {
     async function fetchTags() {
@@ -39,18 +54,21 @@ export function Home(){
       <li>
       <ButtonText
       title="Todos"
-      isActive/>
+      onClick={() => handleTagSelected('all')}
+      isActive={tagsSelected.length === 0}/>
       </li>
 
      {
       tags && tags.map( tag => (
         <li key={String(tag.id)}>
          <ButtonText
-         title={tag.name}/>
+         title={tag.name}
+         onClick={ () => handleTagSelected(tag.name)}
+         isActive={tagsSelected.includes(tag.name)}//   includes() determina se um conjunto de caracteres pode ser encontrado dentro de outra string, retornando true ou false .
+         />
          </li>
-      ))//verificando se existe tags e, se existir, vou usar o map para percorrer as tags
+      ))
     }
-
       </Menu>
 
       <Search>
