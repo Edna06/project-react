@@ -14,13 +14,16 @@ import { ButtonText } from '../../components/ButtonText/index'
 
 
 export function Home(){
+  const [search, setSearch] = useState("")
 
   const [tags, setTags] = useState([])
   const [tagsSelected, setTagsSelected] = useState([])
 
+  const [notes, setNotes] = useState([])
+
+
 function handleTagSelected(tagName) {
   const alreadySelected = tagsSelected.includes(tagName)//quero saber se a tag já está selecionada
-  console.log(alreadySelected)
 
   if(alreadySelected){
     const filteredTags = tagsSelected.filter(tag => tag !== tagName)//tags filtradas
@@ -31,7 +34,6 @@ function handleTagSelected(tagName) {
   }
 
 
-
   useEffect( () => {
     async function fetchTags() {
       const response = await api.get('/tags')
@@ -40,6 +42,18 @@ function handleTagSelected(tagName) {
     fetchTags()
   }, [])
 
+  useEffect(() => {
+    async function fetchNotes() {
+      const response = await api.get(`/notes?title=${search}&tags=${tagsSelected}`);
+      // enviando para a rota /notes através de query o title passando o conteúdo dentro do search e as tags passando o conteúdo dentro de tagsSelected
+      setNotes(response.data);
+    }
+
+    fetchNotes();
+  }, [tagsSelected, search]);
+  // quando mudar o conteúdo do tagsSelected ou do search, executa novamente o useEffect
+//[] -> contém as dependências do useEffect
+//tudo que eu colocar como dependência do vetor, quando mudar o conteúdo de um dos dois ele vai executar novamente o useEffect
 
   return(
     <Container>
@@ -64,37 +78,37 @@ function handleTagSelected(tagName) {
          <ButtonText
          title={tag.name}
          onClick={ () => handleTagSelected(tag.name)}
-         isActive={tagsSelected.includes(tag.name)}//   includes() determina se um conjunto de caracteres pode ser encontrado dentro de outra string, retornando true ou false .
+         isActive={tagsSelected.includes(tag.name)}
          />
          </li>
       ))
     }
       </Menu>
 
+
       <Search>
-      <Input placeholder="Pesquisar pelo título" icon={FiSearch}/>
+        <Input
+        placeholder="Pesquisar pelo título"
+        icon={FiSearch}
+        onChange={(e) => setSearch(e.target.value)}
+        />
       </Search>
+        {/* pegando o conteúdo da caixa de texto */}
 
+
+        {/* //podemos usar as notes para percorrer a coleção e renderizar as notas de acordo com o que foi buscado no banco de dados */}
       <Content>
-
         <Section title="Minhas notas">
-          <Note data={{
-            title:'React',
-            tags: [
-              {id: '1', name: 'react'}
-            ]
-            }}/>
-
-          <Note data={{
-            title:'Exemplo de Middleware',
-            tags: [
-              {id: '1', name: 'express'},
-              {id: '2', name: 'nodejs'}
-            ]
-            }}/>
+        {
+            notes.map(note => (
+              <Note
+                key={String(note.id)}
+                data={note}
+                onClick={() => handleDetails(note.id)}
+              />
+            ))
+          }
         </Section>
-
-
       </Content>
 
       <NewNote to='/new'>
