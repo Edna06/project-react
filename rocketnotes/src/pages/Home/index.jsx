@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-
+import { useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
 
 import {FiSearch ,FiPlus} from "react-icons/fi"
@@ -15,16 +15,15 @@ import { ButtonText } from '../../components/ButtonText/index'
 
 export function Home(){
   const [search, setSearch] = useState("")
-
   const [tags, setTags] = useState([])
   const [tagsSelected, setTagsSelected] = useState([])
-
   const [notes, setNotes] = useState([])
 
+  const navigate = useNavigate()
 
 function handleTagSelected(tagName) {
  if(tagName === "all"){
-   return setTagsSelected([]) 
+   return setTagsSelected([])
  }
 
   const alreadySelected = tagsSelected.includes(tagName)//quero saber se a tag já está selecionada
@@ -37,6 +36,9 @@ function handleTagSelected(tagName) {
     }
   }
 
+function handleDetails(id){ 
+ navigate(`/details/${id}`)
+}
 
   useEffect( () => {
     async function fetchTags() {
@@ -101,7 +103,7 @@ function handleTagSelected(tagName) {
               <Note
                 key={String(note.id)}
                 data={note}
-                onClick={() => handleDetails(note.id)}
+                onClick={() => handleDetails(note.id)} //passando o id para dentro da função (ele ficará na url da página quando eu clicar e me redirecionará para a página de details da nota)
               />
             ))
           }
