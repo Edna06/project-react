@@ -23,6 +23,10 @@ export function Home(){
 
 
 function handleTagSelected(tagName) {
+ if(tagName === "all"){
+   return setTagsSelected([]) 
+ }
+
   const alreadySelected = tagsSelected.includes(tagName)//quero saber se a tag já está selecionada
 
   if(alreadySelected){
@@ -45,15 +49,11 @@ function handleTagSelected(tagName) {
   useEffect(() => {
     async function fetchNotes() {
       const response = await api.get(`/notes?title=${search}&tags=${tagsSelected}`);
-      // enviando para a rota /notes através de query o title passando o conteúdo dentro do search e as tags passando o conteúdo dentro de tagsSelected
       setNotes(response.data);
     }
 
     fetchNotes();
   }, [tagsSelected, search]);
-  // quando mudar o conteúdo do tagsSelected ou do search, executa novamente o useEffect
-//[] -> contém as dependências do useEffect
-//tudo que eu colocar como dependência do vetor, quando mudar o conteúdo de um dos dois ele vai executar novamente o useEffect
 
   return(
     <Container>
@@ -93,10 +93,7 @@ function handleTagSelected(tagName) {
         onChange={(e) => setSearch(e.target.value)}
         />
       </Search>
-        {/* pegando o conteúdo da caixa de texto */}
 
-
-        {/* //podemos usar as notes para percorrer a coleção e renderizar as notas de acordo com o que foi buscado no banco de dados */}
       <Content>
         <Section title="Minhas notas">
         {
