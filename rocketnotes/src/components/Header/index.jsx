@@ -15,8 +15,8 @@ export function Header(){
   const navigation = useNavigate()
 
   function handleSignOut(){
-    navigation('/') //leva o usuário para a tela inicial
-    signOut() // apaga os dados do usuário do localstorage
+    navigation('/')
+    signOut() 
   }
 
   const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
