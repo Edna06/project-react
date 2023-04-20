@@ -69,7 +69,7 @@ Figma Design:
 #### Clone this repository
 
 ```bash
-$ git clone https://github.com/Jcassio-dev/API_Notes-STAGE-08-EXPLORER.git
+$ git clone https://github.com/Edna06/project-react.git
 ```
 
 #### Access project folder in terminal/cmd
