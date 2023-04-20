@@ -31,17 +31,20 @@ export function Profile(){
   const navigate = useNavigate()
 
   function handleBack(){
-    navigate(-1) //voltar na rota anterior 
+    navigate(-1) //voltar na rota anterior
   }
 
   async function handleUpdate(){
-      const user = {
+      const updated = {
         name,
         email,
         password: passwordNew, //enviando a nova senha
         old_password: passwordOld //enviando a senha antiga
       }
-      await updateProfile({ user, avatarFile }) //avatarFile -> o arquivo selecionado de fato pelo usuário (pois tenho que salvar no meu banco de dados)
+
+      const userUpdated = Object.assign( user, updated)
+
+      await updateProfile({ user: userUpdated, avatarFile }) //avatarFile -> o arquivo selecionado de fato pelo usuário (pois tenho que salvar no meu banco de dados)
     }
 
   function handleChangeAvatar(event){
