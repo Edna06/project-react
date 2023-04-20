@@ -1,44 +1,46 @@
 
-import { useState } from "react" 
+import { useState } from "react"
 import { FiUser ,FiMail, FiLock } from "react-icons/fi"
 import {Link, useNavigate} from 'react-router-dom'
 
-//enviando informações para o backend 
+//enviando informações para o backend
 import {api} from "../../services/api"
 
 import {Input} from "../../components/Input/index"
 import {Button} from "../../components/Button/index"
 
 import { Container, Form, Background } from "./styles"
+import { toast } from "react-toastify";
+
 
 
 export function SignUp(){
-  const [name, setName] = useState(""); 
-  const [email, setEmail] = useState(""); 
-  const [password, setPassword] = useState(""); 
-  
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const navigate = useNavigate()
-  
+
    function handleSingleUp() {
     if(!name || !email || !password) {
-      return alert("Preencha todos os campos!")
+      return toast.warn("Preencha todos os campos!")
     }
-  
-      
-      api.post("/users", {name, email, password}) 
+
+
+      api.post("/users", {name, email, password})
       .then(() => {
-        alert("Usuário cadastrado com sucesso!")
-        navigate("/"); 
-      }) 
+        toast.success("Usuário cadastrado com sucesso!")
+        navigate("/");
+      })
       .catch(error =>{
         if(error.response){
-           
-          alert(error.response.data.message)
+
+          toast.error(error.response.data.message)
         } else {
-          alert("Não foi possível cadastrar.")
+          toast.warn("Não foi possível cadastrar.")
         }
-      } ) 
-  }    
+      } )
+  }
 
   return(
     <Container>
@@ -57,7 +59,7 @@ export function SignUp(){
        type="text"
        icon={FiUser}
        onChange = {event => setName( event.target.value)}/>
-       
+
        <Input
        placeholder="E-mail"
        type="text"
@@ -67,7 +69,7 @@ export function SignUp(){
 
       <Input
        placeholder="Senha"
-       type="password" 
+       type="password"
        icon={FiLock}
        onChange = {event => setPassword( event.target.value)}
        />

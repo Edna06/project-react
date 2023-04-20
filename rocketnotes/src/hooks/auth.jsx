@@ -3,6 +3,8 @@ import { createContext, useContext, useState, useEffect} from 'react'
 
 import {api} from "../services/api" //para que eu consiga conectar com a api
 
+import { toast } from "react-toastify";
+
 export const AuthContext = createContext({})
 
 
@@ -24,9 +26,9 @@ function AuthProvider({ children }) {
       } catch(error){
 
         if(error.response){
-          alert(error.response.data.message)
+          toast.error(error.response.data.message)
         } else {
-          alert("Não foi possível entrar.")
+          toast.warn("Não foi possível entrar.")
         }
     }
   }
@@ -47,7 +49,7 @@ function AuthProvider({ children }) {
         const fileUploadForm = new FormData() // FormData -> porque eu preciso enviar ele como arquivo
         fileUploadForm.append('avatar', avatarFile) //similar ao modo que eu fazia através do insomnia manualmente, porém agora farei através de código
 
-        const response = await api.patch('/users/avatar', fileUploadForm) 
+        const response = await api.patch('/users/avatar', fileUploadForm)
         user.avatar = response.data.avatar
       }
 
@@ -58,13 +60,13 @@ function AuthProvider({ children }) {
         user,
         token: data.token
       })
-      alert("Perfil atualizado!")
+      toast.success("Perfil atualizado!")
 
     } catch(error){
         if(error.response){
-          alert(error.response.data.message)
+          toast.error(error.response.data.message)
         } else {
-          alert("Não foi possível atualizar o perfil.")
+          toast.warn("Não foi possível atualizar o perfil.")
         }
       }
     }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 import { ButtonText } from '../../components/ButtonText';
 import { Textarea } from '../../components/Textarea';
@@ -56,18 +57,18 @@ export function New() {
 
 	async function handleNewNote() {
 		if (!title) {
-			return alert("Digite o título da nota");
+			return toast.warn("Digite o título da nota");
 		}
 
 		if (newLink) {
-			return alert("Você deixou um link no campo para adicionar, mas não clicou em adicionar. Clique para adicionar ou deixe o campo vazio.");
+			return toast.info("Você deixou um link no campo para adicionar, mas não clicou em adicionar. Clique para adicionar ou deixe o campo vazio.");
 		}
 
 		if (newTag) {
-			return alert("Você deixou uma tag no campo para adicionar, mas não clicou em adicionar. Clique para adicionar ou deixe o campo vazio.");
+			return toast.info("Você deixou uma tag no campo para adicionar, mas não clicou em adicionar. Clique para adicionar ou deixe o campo vazio.");
 		}
 
-    alert("Nota criada com sucesso!")
+    toast.success("Nota criada com sucesso!")
     handleBack()
 
       await api.post("/notes", {

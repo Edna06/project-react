@@ -1,4 +1,5 @@
 import { Container, Links, Content } from './styles'
+import { toast } from "react-toastify";
 
 import { useParams, useNavigate } from 'react-router-dom' //busca pelos parâmetros que existem na rota
 import { useEffect, useState } from 'react'
@@ -9,6 +10,7 @@ import {Header} from '../../components/Header/index'
 import {ButtonText} from '../../components/ButtonText/index'
 import {Section} from '../../components/Section/index'
 import {Tag} from '../../components/Tags/index'
+
 
 
 export function Details(){
