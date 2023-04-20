@@ -1,5 +1,9 @@
 import { Container, Links, Content } from './styles'
 
+import { useParams, useNavigate } from 'react-router-dom' //busca pelos parâmetros que existem na rota
+import { useEffect, useState } from 'react'
+import { api } from '../../services/api'
+
 import {Button} from '../../components/Button/index'
 import {Header} from '../../components/Header/index'
 import {ButtonText} from '../../components/ButtonText/index'
@@ -8,46 +12,83 @@ import {Tag} from '../../components/Tags/index'
 
 
 export function Details(){
+  const [data, setData] = useState(null) //vai iniciar sem conteúdo
+
+  const params = useParams()
+
+  const navigate = useNavigate()
+
+  function handleBack() {
+  navigate('/')
+  }
+
+  //agora, usando o effect para buscar o conteúdo da nota
+  useEffect(() => {
+    async function fetchNote() {
+      const response = await api.get(`/notes/${params.id}`)
+      setData(response.data)
+    }
+
+    fetchNote()
+  }, [])
 
 return (
   <Container>
-  
-  <Header/>
 
-  <main>
-    <Content>
+    <Header/>
 
-  <ButtonText title="Excluir nota"/>
+    { data &&
 
-    <h1>Introdução ao React</h1>
-    <br />
-    <p>React é uma biblioteca de JavaScript de código aberto para criação de interfaces de usuário. Desenvolvida pelo Facebook, React permite que os desenvolvedores criem componentes de UI reutilizáveis e interativos para aplicativos web e móveis. O React utiliza uma abordagem declarativa para definir como a interface do usuário deve ser exibida, permitindo que os desenvolvedores se concentrem na lógica da aplicação em vez de se preocupar com a manipulação direta do DOM. React é uma das bibliotecas de JavaScript mais populares e é amplamente utilizada em aplicações web modernas.
+      <main>
+        <Content>
+
+        <ButtonText title="Excluir nota"/>
+
+      <h1>
+        {data.title}
+      </h1>
+      <br />
+    <p>
+      {data.description}
     </p>
 
+    {
+      data.links &&
+        <Section title="Links úteis">
+         <Links>
+          {
+            data.links.map(link => (
+          <li key={String(link.id)}>
+            <a href={link.url} target='_blank'>
+              {link.url}
+            </a>
+          </li>
+            ))
+          }
 
-    
-  <Section title= "Links úteis">
-    <Links>
-       <li>
-         <a href="#">https://wwww.rocketseat.com.br</a>
-       </li>
+       </Links>
+    </Section>
+    }
 
-       <li>
-         <a href="#">https://wwww.rocketseat.com.br</a>
-       </li>
-     </Links>
-  </Section>
 
-  <Section title= "Marcadores">
-  <Tag title="express"/>
-  <Tag title="nodejs"/>
-  </Section>
-  
-  <Button title="Voltar"/>   
+    {
+      data.tags &&
+    <Section title= "Marcadores">
+        { data.tags.map(tag => (
+          <Tag
+           key={String(tag.id)}
+           title={tag.name}
+          />
+          ))
+        }
+    </Section>
+  }
+
+  <Button title="Voltar" onClick={handleBack}/>
 
   </Content>
   </main>
-
+  }
   </Container>
 
   )
