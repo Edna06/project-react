@@ -19,11 +19,11 @@ export function Details(){
   const navigate = useNavigate()
 
   function handleBack() {
-  navigate('/')
+  navigate(-1) // volta para a rota anterior (lembrar da fatia de bolo com camadas)
   }
 
   async function handleRemove() {
-    const confirm = window.confirm('Deseja realmente remover a nota?') 
+    const confirm = window.confirm('Deseja realmente remover a nota?')
 
     if(confirm){
      await api.delete(`/notes/${params.id}`)

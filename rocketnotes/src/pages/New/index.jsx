@@ -67,8 +67,8 @@ export function New() {
 			return alert("Você deixou uma tag no campo para adicionar, mas não clicou em adicionar. Clique para adicionar ou deixe o campo vazio.");
 		}
 
-    alert("Nota criada com sucesso!");
-    navigate(-1);
+    alert("Nota criada com sucesso!")
+    handleBack()
 
       await api.post("/notes", {
         title,

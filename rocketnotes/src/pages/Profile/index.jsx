@@ -1,7 +1,6 @@
 import {useState} from 'react'
 
 import {FiArrowLeft, FiUser, FiMail,FiLock, FiCamera} from 'react-icons/fi'
-import { Link } from 'react-router-dom'
 
 import { useAuth } from '../../hooks/auth.jsx'
 
@@ -11,6 +10,7 @@ import avatarPlaceholder from '../../assets/avatar_placeholder.svg' // importand
 import { Container, Form, Avatar } from './styles'
 import {Input} from '../../components/Input/index'
 import {Button} from '../../components/Button/index'
+import { useNavigate } from 'react-router-dom'
 
 export function Profile(){
  const {user, updateProfile } = useAuth()
@@ -27,6 +27,12 @@ export function Profile(){
   const [avatar, setAvatar] = useState(avatarUrl) //se o usuário já tiver avatar, eu vou colocar aqui o avatar
   const [avatarFile, setAvatarFile] = useState(null) //usado exclusivamente para carregar um novo avatar
   //vai começar como null => sem avatar
+
+  const navigate = useNavigate()
+
+  function handleBack(){
+    navigate(-1) //voltar na rota anterior 
+  }
 
   async function handleUpdate(){
       const user = {
@@ -52,9 +58,9 @@ export function Profile(){
   return(
     <Container>
       <header>
-        <Link to="/">
+        <button type='button' onClick={handleBack}>
           <FiArrowLeft/>
-        </Link>
+        </button>
       </header>
 
 
