@@ -1,4 +1,4 @@
-# RocketNotes (Front-End)
+# RocketNotes 
 
 <p align="center">
  <a href="#Description">Description</a> •
@@ -75,7 +75,7 @@ $ git clone https://github.com/Edna06/project-react.git
 #### Access project folder in terminal/cmd
 
 ```bash
-$ cd /RocketNotes-FrontEnd
+$ cd /rocketnotes
 ```
 
 #### Install the dependencies
